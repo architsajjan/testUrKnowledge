@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+// IMPORTS
+import React, { Fragment }  from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+// IMPORT LOCAL COMPONENTS
+import Navbar from './components/Navbar';
+import Register from './components/Register';
+import Instructions from './components/Instructions';
+import Test from './components/Test';
+import Submit from './components/Submit';
+
+// IMPORT MAIN STYLE SHEET
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+export default function App() {
+  return(
+          <Router>
+            <Fragment>
+              <Navbar />
+                <Switch>
+                <Route exact path="/" component={ Register } />
+                  <Route exact path="/test-instructions/:fullName/:email/:contact" component={ Instructions } />
+                  <Route path="/test/:fullName/:email/:contact/:testLevel" component={ Test } />
+                  <Route  path="/submit-test" component={ Submit } />
+                </Switch>
+            </Fragment>
+          </Router>
   );
 }
-
-export default App;

@@ -1,0 +1,83 @@
+{
+    "easy" : {
+        "1": {
+            "question": "i am a question1?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "2": {
+            "question": "i am a question2?",
+            "options": "1,2,3,4",
+            "answer": "1,2"
+        },
+        "3": {
+            "question": "i am a question3?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "4": {
+            "question": "i am a question4?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "5": {
+            "question": "i am a question5?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        }
+    },
+    "medium" : {
+        "1": {
+            "question": "i am a med lvl question1?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "2": {
+            "question": "i am a med lvl question2?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "3": {
+            "question": "i am a med lvl question3?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "4": {
+            "question": "i am a med lvl question4?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "5": {
+            "question": "i am a med lvl question5?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        }
+    },
+    "hard" : {
+        "1": {
+            "question": "i am a hard lvl question1?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "2": {
+            "question": "i am a hard lvl question2?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "3": {
+            "question": "i am a hard lvl question3?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "4": {
+            "question": "i am a hard lvl question4?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        },
+        "5": {
+            "question": "i am a hard lvl question5?",
+            "options": "1,2,3,4",
+            "answer": "1"
+        }
+    }
+}
