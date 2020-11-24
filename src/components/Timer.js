@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Timer extends React.Component{
-    _isMounted = false;
-
     constructor(props){
         super(props);
         this.state = {
@@ -17,14 +15,10 @@ class Timer extends React.Component{
     }
 
     componentDidMount(){
-        this._isMounted = true;
         this.setState({time: this.secondsToTime(this.state.seconds)});
         this.startTimer();
       }
 
-    componentWillUnmount(){
-      this._isMounted = false;
-    }
     
       secondsToTime(time){
         let mins = Math.floor(time / 60);

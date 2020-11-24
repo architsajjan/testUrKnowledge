@@ -1,10 +1,10 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 
-import App from './App';
+import Instructions from '../Instructions';
 
 it("runs without crash", () => {
   const div = document.createElement("div");
-  render(<App />, div);
+  render(<Instructions history={{}} match={{params:{fullName:"",email:"",contact:""}}}/>, div);
   unmountComponentAtNode(div);
 });
