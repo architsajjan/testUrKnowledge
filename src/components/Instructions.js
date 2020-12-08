@@ -1,6 +1,7 @@
 // IMPORTS
 import React from 'react';
 import PropTypes from "prop-types";
+import {WindowOpener} from "./WindowOpener";
 
 
 export default class Instructions extends React.Component {
@@ -16,21 +17,71 @@ export default class Instructions extends React.Component {
 
     handleSubmit(){
         if(this.state.agreement){
-            this.setState(
-            () => {
-              this.props.history.push({
-                pathname: `/test/${this.props.match.params.fullName}/${this.props.match.params.email}/${this.props.match.params.contact}/${this.state.testLevel}`
-              });
-            }
-          );}
+            
+        //     this.setState(
+        //     () => {
+        //       this.props.history.push({
+        //         pathname: `/test/${this.props.location.state.fullName}/${this.props.location.state.email}/${this.props.location.state.contact}/${this.state.testLevel}`
+        //       });
+        //     }
+        //   );
+    }
     }
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
+    }
+
+    testHandler = (err, res, testResult) =>{
+        if(err !== null)console.error(err);
+        else{
+            console.log(res);
+        }
+        this.submitTest(testResult);
+
+    }
+
+    async downloadFile(testResult){
+        if(testResult !== null)
+        {
+            const myData = {
+                fuLLName: this.props.location.state.fullName.toString(),
+                email: this.props.location.state.email.toString(),
+                contact: this.props.location.state.contact.toString(),
+                ...testResult
+            };
+            const date = new Date();
+            const fileName = this.props.location.state.fullName.toString() +"_"+ (date.getDate().toString() + (date.getMonth()+1).toString() + date.getFullYear().toString() + date.getHours().toString() +date.getMinutes().toString());
+            const json = JSON.stringify(myData);
+            const blob = new Blob([json], { type: "application/json" });
+            const href = await URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = href;
+            link.download = `${fileName}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
       }
 
+    submitTest(testResult){
+        this.downloadFile(testResult);
+        this.props.history.push({
+            pathname: `/submit-test`
+        });
+      }
+
+
+
     render(){
-        const startTestButton = <input type="button" className="btn btn-primary" value="Submit Details and Start the Test" onClick={this.handleSubmit} disabled={!this.state.agreement}/>; 
+        const startTestButton = 
+            <WindowOpener
+                url={`/test/${this.state.testLevel}`}
+                bridge={this.testHandler}
+                testLevel = {this.state.testLevel}
+            >
+                <input type="button" className="btn btn-primary" value="Submit Details and Start the Test" disabled={!this.state.agreement}/> 
+            </WindowOpener>
         return (
             <div className="landing">
                 <div className="">
@@ -85,8 +136,8 @@ export default class Instructions extends React.Component {
 
 Instructions.propTypes = {
     history: PropTypes.object.isRequired,
-    match: PropTypes.shape({
-        params : PropTypes.shape({
+    location: PropTypes.shape({
+        state : PropTypes.shape({
             fullName: PropTypes.string,
             email: PropTypes.string,
             contact: PropTypes.string

@@ -1,6 +1,6 @@
 // IMPORTS
 import React, { Fragment }  from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
 // IMPORT LOCAL COMPONENTS
 import Navbar from './components/Navbar';
@@ -19,9 +19,10 @@ export default function App() {
               <Navbar />
                 <Switch>
                 <Route exact path="/" component={ Register } />
-                  <Route exact path="/test-instructions/:fullName/:email/:contact" component={ Instructions } />
-                  <Route path="/test/:fullName/:email/:contact/:testLevel" component={ Test } />
+                  <Route exact path="/test-instructions" component={ Instructions } />
+                  <Route path="/test/:testLevel" component={ Test } />
                   <Route  path="/submit-test" component={ Submit } />
+                  <Redirect from="*" to="/" />
                 </Switch>
             </Fragment>
           </Router>

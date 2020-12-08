@@ -1,5 +1,5 @@
 // IMPORTS
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import { Link, Redirect, Route, useRouteMatch } from "react-router-dom";
 
@@ -66,6 +66,14 @@ export default function Test(props){
     // STATE TO TRACK PREVIOUS QUESTION NUMBER
     const [previousQues, setPreviousQues] = useState(5);
 
+    useEffect(() => {
+        if (window.performance) {
+            if (performance.navigation.type == 1) {
+              submitTest();
+            }
+          }
+      }, []);
+
     function questionNavigation(questionNo, callbackType="neutral"){
         let previousQues = Number(questionNo) === 1 ? 5 : Number(questionNo)-1;
             setPreviousQues(previousQues);
@@ -79,7 +87,7 @@ export default function Test(props){
             SetCurrentQuestion(questionNo);
     }
     
-    async function downloadFile(){
+    async function GenerateReportObject(){
         let finalSoln =["", "", "", "", ""];
         for(let questionNo = 1; questionNo<=5;++questionNo){
         for (let option= 1; option<=4;++option) {
@@ -88,10 +96,7 @@ export default function Test(props){
             }
         }}
         const myData = {
-            fuLLName: props.match.params.fullName.toString(),
             testLevel: props.match.params.testLevel.toString(),
-            email: props.match.params.email.toString(),
-            contact: props.match.params.contact.toString(),
             question1: {
                 question: base[1].question,
                 selectedoption: finalSoln[0],
@@ -124,24 +129,13 @@ export default function Test(props){
             }
 
         };
-        const date = new Date();
-        const fileName = props.match.params.fullName.toString() +"_"+ (date.getDate().toString() + (date.getMonth()+1).toString() + date.getFullYear().toString() + date.getHours().toString() +date.getMinutes().toString());
-        const json = JSON.stringify(myData);
-        const blob = new Blob([json], { type: "application/json" });
-        const href = await URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = href;
-        link.download = `${fileName}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        return myData;
       }
 
-      function submitTest(){
-        downloadFile();
-        props.history.push({
-            pathname: `/submit-test`
-        });
+    async function submitTest(){
+        let report = await GenerateReportObject();
+        window.opener.onSuccess("report generated", report);
+        window.close(); 
       }
 
       function updateState(res,questionNo){
@@ -218,10 +212,7 @@ Test.propTypes = {
     history: PropTypes.object.isRequired,
     match: PropTypes.shape({
         params: PropTypes.shape({
-          fullName: PropTypes.string,
-          email: PropTypes.string,
-          contact: PropTypes.string,
-          testLevel: PropTypes.string
+            testLevel: PropTypes.string
         })
-      }).isRequired
+    }).isRequired
   };
