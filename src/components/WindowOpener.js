@@ -104,6 +104,6 @@ WindowOpener.propTypes = {
     children: PropTypes.object
 }
 WindowOpener.defaultProps = {
-    name: "Cool popup",
+    name: "TestUrKnowledge",
     opts: `dependent=${1}, alwaysOnTop=${1}, alwaysRaised=${1}, alwaysRaised=${1}, width=${1200}, height=${800}`
 }

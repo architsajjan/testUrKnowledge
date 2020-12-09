@@ -59,7 +59,7 @@ img {
 }
 
 .questionPanel {
-  display: flex;
+  display: flow-root;
 }
 
 .questionAttempted {
@@ -97,6 +97,8 @@ img {
   min-width: 35px;
   padding: 10px;
   margin: 5px;
+  color: black;
+    font-weight: 600;
   text-align: center;
 }
 

@@ -6,7 +6,7 @@ export default function QuestionCard(props) {
     let questionStatus = (props.isQuestionAttempted) ? "questionAttempted" : "questionUnAttempted";
     
     return (
-        <div className={questionStatus} onClick={()=>props.callback}>
+        <div className={questionStatus} onClick={props.callback} style={{border: props.iscurrentQues ? "2px solid black": ""}}>
             {props.questionNo}
         </div>
     )
@@ -15,5 +15,6 @@ export default function QuestionCard(props) {
 QuestionCard.propTypes = {
     isQuestionAttempted: PropTypes.bool,
     questionNo: PropTypes.number,
-    callback: PropTypes.func
+    callback: PropTypes.func,
+    iscurrentQues: PropTypes.bool
   };

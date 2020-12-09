@@ -18,7 +18,6 @@ class Timer extends React.Component{
         this.setState({time: this.secondsToTime(this.state.seconds)});
         this.startTimer();
       }
-
     
       secondsToTime(time){
         let mins = Math.floor(time / 60);
@@ -55,22 +54,22 @@ class Timer extends React.Component{
         this.submitTest();
       }
     
-    
       submitTest(){
         this.props.submit();
       }
 
     render(){
+      const {min, sec} = this.state.time;
         return(
             <div className="timer">
                 <span>
-                    <h1 className="large text-primary">{this.state.time.min}</h1>
+                    <h1 className="large text-primary">{min<10?("0"+min):min}</h1>
                 </span>
                 <span>
                     <h1 className="large text-primary">:</h1>
                 </span>
                 <span>
-                    <h1 className="large text-primary">{this.state.time.sec}</h1>
+                    <h1 className="large text-primary">{sec<10?("0"+sec):sec}</h1>
                 </span>
             </div>
         );  
