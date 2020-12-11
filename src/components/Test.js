@@ -129,7 +129,7 @@ export default function Test(props){
       arr.push(Questions);
       
       return (
-            <div className="landing">
+            <div className="landing" style={{background: "slateblue"}}>
                 <div>
                     {   setTimeout(()=>{
                         history.pushState(null, null, location.href);
