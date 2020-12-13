@@ -89,6 +89,7 @@ export default class Instructions extends React.Component {
                         <h1 className="x-large">Test Instructions</h1>
                     
                         <ol>
+                            <li style={{color: "red"}}>DO NOT REFRESH THE TEST WINDOW, IT WILL RESULT IN AUTOMATIC SUBMISSION OF YOUR TEST.</li>
                             <li>Following quiz contains 5 questions. You can choose among 3 levels of Test: Easy, Medium, Hard.</li>
                             <li>The given time for this quiz is 5 minutes. After that, the form will be closed for you.</li>
                             <li>The Test will be automatically submitted on completion of time, and the given responses will be recorded as your solution.</li>

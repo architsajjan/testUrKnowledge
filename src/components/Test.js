@@ -149,7 +149,7 @@ export default function Test(props){
                     </div>
                 </div>
 
-                <div className="instructions-side">
+                <div className="instructions-side testSide">
                     <div className="test-container">
                         <hr />
                         <div className="controller">
@@ -184,7 +184,7 @@ export default function Test(props){
                         </div>
                         <hr />
                         <div className="buttons submitTest">
-                                <input type="button" className="btn primary-btn" value="Submit Test" onClick={submitTest} />
+                                <input type="button" className="btn btn-primary" value="Submit Test" onClick={submitTest} />
                             </div>
                     </div>    
                 </div>

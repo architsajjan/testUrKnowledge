@@ -14,14 +14,14 @@ export default function Submit() {
                 }
                 <div className="">
                     <div className="instructions-main dark-overlay">
-                        <h1 className="x-large">Test submitted successfully</h1>
+                        <h1>A copy of your result will be downloaded on successfull submission of your Test.</h1>
                     </div>
                 </div>
                 <div className="instructions-side">
                     <div className="container">
                         <h1 className="large text-primary">Note:</h1>
                         <p>
-                            A copy of your result has been downloaded, to go to the home page you could click the logo on navbar.
+                            To go to the home page you could click the logo on navbar.
                         </p>
                     </div>    
                 </div>
