@@ -6,45 +6,26 @@ import { useParams } from 'react-router-dom';
 export default function Question(props){
     // TRACKS CURRENT QUESTION NUMBER 
     let { questionNo } = useParams();
-
-    const [ option1, option2, option3, option4 ]= props.base[questionNo].options.split(",");
-    
     let questionType = (props.base[questionNo].answer.split(",").length > 1) ? "checkbox" : "radio";
-    
+
+    // const [ option1, option2, option3, option4 ]= props.base[questionNo].options.split(",");
+    let element = props.base[questionNo].options.split(",").map(option => 
+        <div className="form-group" key={option}>
+        <label> 
+            <input name={questionNo} value={option} checked={Object.keys(props.testresult).includes(questionNo) && props.testresult[Number(questionNo)].includes(option)} onChange={() => handleClick(option)} type={questionType} /> 
+                &nbsp; {option} 
+        </label>
+        </div>
+        );
+        
     function handleClick(option){
-        let res = {...props.testresult};
-        res[questionNo][option] = !res[questionNo][option];        
-        props.callback(res, questionNo);
+        props.callback(option, questionNo, questionType);
     }
 
     return (
       <div>
         <h2>{props.base[questionNo].question}</h2>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option1} checked={props.testresult[questionNo][1]} onChange={() => handleClick(1)} type={questionType} /> 
-                    &nbsp; {option1} 
-            </label>
-        </div>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option2} checked={props.testresult[questionNo][2]} onChange={() => handleClick(2)} type={questionType} /> 
-                    &nbsp; {option2} 
-            </label>
-        </div>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option3} checked={props.testresult[questionNo][3]} onChange={() => handleClick(3)} type={questionType} /> 
-                    &nbsp; {option3} 
-            </label>
-        </div>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option4} checked={props.testresult[questionNo][4]} onChange={() => handleClick(4)} type={questionType} /> 
-                    &nbsp; {option4} 
-            </label>
-        </div>
-        
+        {element}
       </div>
     );
   }

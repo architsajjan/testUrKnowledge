@@ -1,5 +1,5 @@
 // IMPORTS
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import { Link, Redirect, Route, useRouteMatch } from "react-router-dom";
 
@@ -13,49 +13,20 @@ import questions from './Additionals/questions.json';
 export default function Test(props){
     // CHOOSE QUESTION BASE BASED ON TEST LEVEL SELECTED
     let base = questions.easy;
-    if(props.match.params.testLevel === 'medium'){
-        base = questions.medium;
-    }
-    else if(props.match.params.testLevel === 'hard'){
-        base = questions.hard;
-    }
+        if(props.match.params.testLevel === 'medium'){
+            base = questions.medium;
+        }
+        else if(props.match.params.testLevel === 'hard'){
+            base = questions.hard;
+        }
+
+    let noOfQuestions = Object.keys(base).length;
 
     // STATE TO MANAGE TEST RESULTS
-    const [testResult, setTestresult] = useState({
-        1: {
-            1: false,
-            2: false,
-            3: false,
-            4: false,
-        },
-        2: {
-            1: false,
-            2: false,
-            3: false,
-            4: false,
-        },
-        3: {
-            1: false,
-            2: false,
-            3: false,
-            4: false,
-        },
-        4: {
-            1: false,
-            2: false,
-            3: false,
-            4: false,
-        },
-        5: {
-            1: false,
-            2: false,
-            3: false,
-            4: false,
-        }
-    });
+    const [testResult, setTestresult] = useState({});
     
     // STATE TO MANAGE QUESTION ATTEMPT STATUS
-    const [areQuestionsAttempted, setQuestionsAttemption] = useState([false,false,false,false,false]);
+    const [areQuestionsAttempted, setQuestionsAttemption] = useState([]);
 
     // STATE TO TRACK CURRENT QUESTION NUMBER
     const [questionNo, SetCurrentQuestion] = useState(1);
@@ -64,96 +35,101 @@ export default function Test(props){
     const [nextQues, setNextQues] = useState(2);
     
     // STATE TO TRACK PREVIOUS QUESTION NUMBER
-    const [previousQues, setPreviousQues] = useState(5);
+    const [previousQues, setPreviousQues] = useState(noOfQuestions);
+
+    useEffect(() => {
+        if (window.performance) {
+            if (performance.navigation.type == 1) {
+              submitTest();
+            }
+          }
+      }, []);
 
     function questionNavigation(questionNo, callbackType="neutral"){
-        let previousQues = Number(questionNo) === 1 ? 5 : Number(questionNo)-1;
-            setPreviousQues(previousQues);
-        let nextQues = Number(questionNo) === 5 ? 1 : Number(questionNo)+1;
-            setNextQues(nextQues);
-        if(callbackType === "previous")
-            SetCurrentQuestion(previousQues);
-        else if(callbackType === "next")
-            SetCurrentQuestion(nextQues);
-        else
+        let prevQues = Number(questionNo) === 1 ? noOfQuestions : Number(questionNo)-1;
+        let nxtQues = Number(questionNo) === noOfQuestions ? 1 : Number(questionNo)+1;
+        if(callbackType === "neutral"){
+            setNextQues(nxtQues);
+            setPreviousQues(prevQues);
             SetCurrentQuestion(questionNo);
+        }
+        if(callbackType === "previous"){
+            questionNavigation(previousQues);
+        }
+        if(callbackType === "next"){
+            questionNavigation(nxtQues);
+        }
     }
     
-    async function downloadFile(){
-        let finalSoln =["", "", "", "", ""];
-        for(let questionNo = 1; questionNo<=5;++questionNo){
-        for (let option= 1; option<=4;++option) {
-            if (testResult[questionNo][option] === true) {
-                finalSoln[questionNo-1] +=  (finalSoln[questionNo-1]==="") ? option.toString() : ","+option.toString();
+    async function GenerateReportObject(){
+        let result = {};
+        function Verify(arr,str){
+            if(
+                arr.every(option => str.split(",").includes(option.toString())) &&
+                str.split(",").every(option => arr.map(opt => opt.toString()).includes(option.toString())) 
+            )return true;
+            return false;
+        }
+        Object.keys(base).map(quesNo => {
+            result[quesNo] = {
+                question: base[Number(quesNo)].question,
+                selectedoption: Object.keys(testResult).includes(quesNo) ? testResult[Number(quesNo)].length > 0 ? testResult[Number(quesNo)].toString() : "" : "",
+                actualAnswers: base[Number(quesNo)].answer,
+                result: Object.keys(testResult).includes(quesNo) ? testResult[Number(quesNo)].length > 0 ? Verify(testResult[Number(quesNo)],base[Number(quesNo)].answer) ? "CORRECT": "INCORRECT" : "UNATTEMPTED" : "UNATTEMPTED"
             }
-        }}
+        })
+        
         const myData = {
-            fuLLName: props.match.params.fullName.toString(),
             testLevel: props.match.params.testLevel.toString(),
-            email: props.match.params.email.toString(),
-            contact: props.match.params.contact.toString(),
-            question1: {
-                question: base[1].question,
-                selectedoption: finalSoln[0],
-                actualAnswers: base[1].answer,
-                result: (finalSoln[0] === base[1].answer) ? "CORRECT":"INCORRECT"
-            },
-            question2: {
-                question: base[2].question,
-                selectedoption: finalSoln[1],
-                actualAnswers: base[2].answer,
-                result: (finalSoln[1] === base[2].answer) ? "CORRECT":"INCORRECT"
-            },
-            question3: {
-                question: base[3].question,
-                selectedoption: finalSoln[2],
-                actualAnswers: base[3].answer,
-                result: (finalSoln[2] === base[3].answer) ? "CORRECT":"INCORRECT"
-            },
-            question4: {
-                question: base[4].question,
-                selectedoption: finalSoln[3],
-                actualAnswers: base[4].answer,
-                result: (finalSoln[3] === base[4].answer) ? "CORRECT":"INCORRECT"
-            },
-            question5: {
-                question: base[5].question,
-                selectedoption: finalSoln[4],
-                actualAnswers: base[5].answer,
-                result: (finalSoln[4] === base[5].answer) ? "CORRECT":"INCORRECT"
-            }
-
+            ...result
         };
-        const date = new Date();
-        const fileName = props.match.params.fullName.toString() +"_"+ (date.getDate().toString() + (date.getMonth()+1).toString() + date.getFullYear().toString() + date.getHours().toString() +date.getMinutes().toString());
-        const json = JSON.stringify(myData);
-        const blob = new Blob([json], { type: "application/json" });
-        const href = await URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = href;
-        link.download = `${fileName}.json`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        return myData;
       }
 
-      function submitTest(){
-        downloadFile();
-        props.history.push({
-            pathname: `/submit-test`
-        });
+      async function submitTest(){
+        let report = await GenerateReportObject();
+        window.opener.onSuccess("report generated", report);
+        window.close(); 
       }
 
-      function updateState(res,questionNo){
-        setTestresult(res);
+      function updateState(res, questionNo, questionType){
+        let tempResult = {...testResult};
+        if(Object.keys(tempResult).includes(questionNo)){
+            if(tempResult[Number(questionNo)].includes(res)){
+                tempResult[Number(questionNo)].splice(tempResult[Number(questionNo)].indexOf(res), 1);      
+            }
+            else {
+                if(questionType !== "radio")tempResult[Number(questionNo)].push(res);
+                else {
+                    let temp = [res ,];
+                    tempResult[Number(questionNo)] = temp;
+                }
+            }
+        }
+        else{
+            let temp = {[questionNo]: [res ,]};
+            tempResult = {...tempResult, ...temp};
+        }
+        setTestresult(tempResult);
         let renew = [...areQuestionsAttempted];
         renew[questionNo -1] = true;
         setQuestionsAttemption(renew);
       }
 
-    const { url, path } = useRouteMatch();
-        return (
-            <div className="landing">
+      
+      const { url, path } = useRouteMatch();
+          
+      let Questions = [];
+      Object.keys(base).map(quesNo =>{
+              Questions.push(<Link to={`${url}/${Number(quesNo)}`} key={Number(quesNo)}><QuestionCard questionNo={Number(quesNo)} iscurrentQues={Number(quesNo) === questionNo ? true : false} callback={()=>questionNavigation(Number(quesNo), "neutral")} isQuestionAttempted={areQuestionsAttempted[Number(quesNo)-1]}/></Link>);
+              if(Number(quesNo)%5===0)<hr />;  
+      })
+      let arr = [];
+      while(Questions.length>5)arr.push(Questions.splice(0,5))
+      arr.push(Questions);
+      
+      return (
+            <div className="landing" style={{background: "slateblue"}}>
                 <div>
                     {   setTimeout(()=>{
                         history.pushState(null, null, location.href);
@@ -165,7 +141,7 @@ export default function Test(props){
                     <div className="instructions-main dark-overlay"> 
                         <Route path={`${path}/:questionNo`}>
                             <Question 
-                                callback={(res,questionNo)=> updateState(res,questionNo)} 
+                                callback={(res,questionNo, questionType)=> updateState(res,questionNo, questionType)} 
                                 testresult={testResult}
                                 base={base}
                             />
@@ -173,7 +149,7 @@ export default function Test(props){
                     </div>
                 </div>
 
-                <div className="instructions-side">
+                <div className="instructions-side testSide">
                     <div className="test-container">
                         <hr />
                         <div className="controller">
@@ -187,11 +163,11 @@ export default function Test(props){
                                 <div className="questionUnAttempted"><h1 className="small text-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Unattempted</h1></div>
                             
                             <div className="questionPanel controller">
-                                <Link to={`${url}/1`}><QuestionCard questionNo={1} callback={()=>questionNavigation(1)} isQuestionAttempted={areQuestionsAttempted[0]}/></Link>
-                                <Link to={`${url}/2`}><QuestionCard questionNo={2} callback={()=>questionNavigation(2)} isQuestionAttempted={areQuestionsAttempted[1]}/></Link>
-                                <Link to={`${url}/3`}><QuestionCard questionNo={3} callback={()=>questionNavigation(3)} isQuestionAttempted={areQuestionsAttempted[2]}/></Link>
-                                <Link to={`${url}/4`}><QuestionCard questionNo={4} callback={()=>questionNavigation(4)} isQuestionAttempted={areQuestionsAttempted[3]}/></Link>
-                                <Link to={`${url}/5`}><QuestionCard questionNo={5} callback={()=>questionNavigation(5)} isQuestionAttempted={areQuestionsAttempted[4]}/></Link>
+                                {
+                                    
+                                    arr.map(quesArr => <div key={Math.random()} style={{display:"flex"}}>{quesArr}</div>)
+                                    
+                                }
                             </div>
 
                             <Link to={`${url}/${previousQues}`}>
@@ -203,7 +179,7 @@ export default function Test(props){
                         </div>
                         <hr />
                         <div className="buttons submitTest">
-                                <input type="button" className="btn primary-btn" value="Submit Test" onClick={submitTest} />
+                                <input type="button" className="btn btn-primary" value="Submit Test" onClick={submitTest} />
                             </div>
                     </div>    
                 </div>
@@ -218,10 +194,7 @@ Test.propTypes = {
     history: PropTypes.object.isRequired,
     match: PropTypes.shape({
         params: PropTypes.shape({
-          fullName: PropTypes.string,
-          email: PropTypes.string,
-          contact: PropTypes.string,
-          testLevel: PropTypes.string
+            testLevel: PropTypes.string
         })
-      }).isRequired
+    }).isRequired
   };

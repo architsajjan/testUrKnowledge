@@ -10,6 +10,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
+  user-select: none;
   padding: 0;
 }
 
@@ -59,44 +60,48 @@ img {
 }
 
 .questionPanel {
-  display: flex;
+  display: flow-root;
 }
 
 .questionAttempted {
   background-color: #28a745;
   max-height: 40px;
   max-width: 40px;
-  min-width: 35px;
+  min-width: 40px;
   padding: 10px;
   color: black;
   font-weight: 600;
+  border-radius: 5px;
   margin: 5px;
   text-align: center;
 }
 .questionUnAttempted {
-  background-color: #888;
+  background-color: #f6a7a7;
   max-height: 40px;
   max-width: 40px;
-  min-width: 35px;
+  min-width: 40px;
   padding: 10px;
   color: black;
   font-weight: 600;
+  border-radius: 5px;
   margin: 5px;
   text-align: center;
 }
 
 .controller {
-  border: 3px solid #051841;
   margin: 5px;
   padding: 12px;
 }
 
 .movementCard {
-  background-color: #3b5998;
+  background-color: white;
+  border-radius: 12px;
   max-height: 40px;
   min-width: 35px;
   padding: 10px;
   margin: 5px;
+  color: black;
+    font-weight: 600;
   text-align: center;
 }
 
@@ -230,7 +235,11 @@ img {
 .bg-primary,
 .badge-primary,
 .alert-primary {
-  background: var(--primary-color);
+  font-family: inherit;
+  font-size: 16px;
+  background: #40be40;
+  height: 3rem;
+  border-radius: 25px;
   color: #fff;
 }
 
@@ -325,7 +334,9 @@ img {
   width: 100%;
   padding: 0.4rem;
   font-size: 1.2rem;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  outline: none;
 }
 
 .form input[type="submit"],
@@ -379,7 +390,6 @@ button {
   width: 100%;
   top: 0;
   border-bottom: solid 1px var(--primary-color);
-  opacity: 0.9;
 }
 
 .navbar ul {
@@ -403,8 +413,9 @@ button {
 /* Landing Page */
 .landing {
   position: relative;
-  background-color: #c4302b;
+  background-color: purple;
   height: 100vh;
+  overflow: hidden;
 }
 
 .landing-main {
@@ -441,6 +452,7 @@ button {
   height: 100%;
   width: 70%;
   margin: auto;
+  padding: 2rem;
   border-right: 2px black solid;
   display: flex;
   flex-direction: column;
@@ -465,6 +477,10 @@ button {
   align-items: center;
   justify-content: center;
   text-align: left;
+}
+
+.testSide{
+  background : repeating-linear-gradient(86deg, purple, navy 570px);
 }
 
 form select {

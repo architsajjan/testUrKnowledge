@@ -36,12 +36,15 @@ export default class Register extends Component {
     }
 
     handleSubmit(){
+        const {fullName, email, contact} = this.state;
         this.validateForm();
+
         if(this.enableSubmit)
             this.setState(
                 () => {
                 this.props.history.push({
-                    pathname: `/test-instructions/${this.state.fullName}/${this.state.email}/${this.state.contact}`
+                    pathname: `/test-instructions`,
+                    state: {fullName, email, contact}
                 });
                 }
             );
@@ -86,5 +89,5 @@ export default class Register extends Component {
 }
 
 Register.propTypes = {
-    history: PropTypes.object.isRequired,
+    history: PropTypes.object,
   };

@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Timer extends React.Component{
-    _isMounted = false;
-
     constructor(props){
         super(props);
         this.state = {
@@ -17,14 +15,9 @@ class Timer extends React.Component{
     }
 
     componentDidMount(){
-        this._isMounted = true;
         this.setState({time: this.secondsToTime(this.state.seconds)});
         this.startTimer();
       }
-
-    componentWillUnmount(){
-      this._isMounted = false;
-    }
     
       secondsToTime(time){
         let mins = Math.floor(time / 60);
@@ -61,22 +54,22 @@ class Timer extends React.Component{
         this.submitTest();
       }
     
-    
       submitTest(){
         this.props.submit();
       }
 
     render(){
+      const {min, sec} = this.state.time;
         return(
             <div className="timer">
                 <span>
-                    <h1 className="large text-primary">{this.state.time.min}</h1>
+                    <h1 className="large text-primary">{min<10?("0"+min):min}</h1>
                 </span>
                 <span>
                     <h1 className="large text-primary">:</h1>
                 </span>
                 <span>
-                    <h1 className="large text-primary">{this.state.time.sec}</h1>
+                    <h1 className="large text-primary">{sec<10?("0"+sec):sec}</h1>
                 </span>
             </div>
         );  
