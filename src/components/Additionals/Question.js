@@ -17,54 +17,15 @@ export default function Question(props){
         </label>
         </div>
         );
-    
-    
+        
     function handleClick(option){
-        let res = {...props.testresult};
-        // if(Object.keys(res).includes(questionNo)){
-        //     if(res[Number(questionNo)].includes(option)){
-        //         res[Number(questionNo)].splice(res[Number(questionNo)].indexOf(option), 1);    
-        //     }
-        //     else res[Number(questionNo)].push(option);
-        // }
-        // else{
-        //     let temp = {[questionNo]: [option ,]};
-        //     res = {...res, ...temp};
-        // }
-//        res[questionNo][option] = !res[questionNo][option];        
-console.log(res);        
-props.callback(option, questionNo, questionType);
+        props.callback(option, questionNo, questionType);
     }
 
     return (
       <div>
         <h2>{props.base[questionNo].question}</h2>
         {element}
-        {/* <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option1} checked={props.testresult[questionNo][1]} onChange={() => handleClick(1)} type={questionType} /> 
-                    &nbsp; {option1} 
-            </label>
-        </div>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option2} checked={props.testresult[questionNo][2]} onChange={() => handleClick(2)} type={questionType} /> 
-                    &nbsp; {option2} 
-            </label>
-        </div>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option3} checked={props.testresult[questionNo][3]} onChange={() => handleClick(3)} type={questionType} /> 
-                    &nbsp; {option3} 
-            </label>
-        </div>
-        <div className="form-group">
-            <label> 
-                <input name={questionNo} value={option4} checked={props.testresult[questionNo][4]} onChange={() => handleClick(4)} type={questionType} /> 
-                    &nbsp; {option4} 
-            </label>
-        </div> */}
-        
       </div>
     );
   }

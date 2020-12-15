@@ -89,5 +89,5 @@ export default class Register extends Component {
 }
 
 Register.propTypes = {
-    history: PropTypes.object.isRequired,
+    history: PropTypes.object,
   };

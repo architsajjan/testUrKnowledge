@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="landing"
+>
+  4
+  <div
+    className=""
+  >
+    <div
+      className="instructions-main dark-overlay"
+    >
+      <h1>
+        A copy of your result will be downloaded on successfull submission of your Test.
+      </h1>
+    </div>
+  </div>
+  <div
+    className="instructions-side"
+  >
+    <div
+      className="container"
+    >
+      <h1
+        className="large text-primary"
+      >
+        Note:
+      </h1>
+      <p>
+        To go to the home page you could click the logo on navbar.
+      </p>
+    </div>
+  </div>
+</div>
+`;

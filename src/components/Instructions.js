@@ -12,20 +12,6 @@ export default class Instructions extends React.Component {
             agreement: false
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit(){
-        if(this.state.agreement){
-            
-        //     this.setState(
-        //     () => {
-        //       this.props.history.push({
-        //         pathname: `/test/${this.props.location.state.fullName}/${this.props.location.state.email}/${this.props.location.state.contact}/${this.state.testLevel}`
-        //       });
-        //     }
-        //   );
-    }
     }
 
     handleChange(event) {
@@ -34,11 +20,7 @@ export default class Instructions extends React.Component {
 
     testHandler = (err, res, testResult) =>{
         if(err !== null)console.error(err);
-        else{
-            console.log(res);
-        }
         this.submitTest(testResult);
-
     }
 
     async downloadFile(testResult){
@@ -104,7 +86,7 @@ export default class Instructions extends React.Component {
                 <div className="instructions-side">
                     <div className="container">
                         <h1 className="large text-primary">Agreement</h1>
-                        <form className="form" onSubmit={this.handleSubmit}>
+                        <form className="form">
                             <div className="form-group">
                                 <select name="testLevel" onChange={e => this.handleChange(e)}>
                                     <option defaultValue value="easy">Easy</option>

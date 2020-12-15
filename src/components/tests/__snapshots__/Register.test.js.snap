@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="landing"
+>
+  <div
+    className=""
+  >
+    <div
+      className="landing-main dark-overlay"
+    >
+      <h1
+        className="x-large"
+      >
+        Test Ur Knowledge
+      </h1>
+      <p
+        className="lead"
+      >
+        Enter your Details to Continue with the test:
+      </p>
+    </div>
+  </div>
+  <div
+    className="landing-side"
+  >
+    <div
+      className="container"
+    >
+      <h1
+        className="large text-primary"
+      >
+        Register
+      </h1>
+      <form
+        className="form"
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group"
+        >
+          <input
+            autoFocus={true}
+            name="fullName"
+            onChange={[Function]}
+            placeholder="Full Name"
+            required={true}
+            spellCheck={false}
+            type="text"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            name="email"
+            onChange={[Function]}
+            placeholder="Email Address"
+            required={true}
+            type="email"
+          />
+        </div>
+        <div
+          className="form-group"
+        >
+          <input
+            max="10000000000"
+            minLength="10"
+            name="contact"
+            onChange={[Function]}
+            placeholder="Contact No."
+            required={true}
+            type="text"
+          />
+        </div>
+        <div
+          className="buttons"
+        >
+          <input
+            className="btn btn-primary"
+            onClick={[Function]}
+            type="button"
+            value="Submit Details"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+
 // Main Window.
 let browser = null;
 // child window
@@ -7,8 +8,7 @@ let popup = null;
 // interval
 let timer = null;
 
-// This function is what the name says.
-// it checks whether the popup still open or not
+// This function checks whether the popup is still open or not
 function watcher () {
     // if popup is null then let's clean the intervals.
     if (popup === null) {
@@ -29,19 +29,11 @@ function watcher () {
 }
 
 export class WindowOpener extends React.Component {
-    // The properties of the component are the following
-    // `url`: URI in which the new window will open in.
-    // `name`: name of the popup.
-    // `bridge`: this will be the function that we will use to communicate parent and son
-    // `opts`: options that the window has. if you want to know all the options goto
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/open
     constructor (props) {
         super(props);
-        // binding
         this.onClickHandler = this.onClickHandler.bind(this);
-        // browser is set to current window
+
         browser = window.self;
-        // each time we send a message will use the `onSuccess`
         browser.onSuccess = (resp, result) => {
             props.bridge(null, resp, result);
         }
@@ -50,7 +42,6 @@ export class WindowOpener extends React.Component {
         browser.onError = (error) => {
             props.bridge(error);
         }
-
         // Tells when a child window is open
         browser.onOpen = (message) => {
             props.bridge(null, message, null);
@@ -60,7 +51,7 @@ export class WindowOpener extends React.Component {
             props.bridge(null, message, null);
         }
     }
-    // opens a child
+
     onClickHandler () {
         const { url, name, opts } = this.props;
         // if there is  already a child open, let's set focus on it
@@ -69,6 +60,7 @@ export class WindowOpener extends React.Component {
 
             return ;
         }
+        
         // we open a new window.
         popup = browser.open(url, name, opts);
 

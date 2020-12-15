@@ -45,7 +45,7 @@ export default function Test(props){
           }
       }, []);
 
-    function questionNavigation(questionNo, callbackType="neutral"){//////
+    function questionNavigation(questionNo, callbackType="neutral"){
         let prevQues = Number(questionNo) === 1 ? noOfQuestions : Number(questionNo)-1;
         let nxtQues = Number(questionNo) === noOfQuestions ? 1 : Number(questionNo)+1;
         if(callbackType === "neutral"){
@@ -168,11 +168,6 @@ export default function Test(props){
                                     arr.map(quesArr => <div key={Math.random()} style={{display:"flex"}}>{quesArr}</div>)
                                     
                                 }
-                                {/* <Link to={`${url}/1`}><QuestionCard questionNo={1} callback={()=>questionNavigation(1)} isQuestionAttempted={areQuestionsAttempted[0]}/></Link>
-                                <Link to={`${url}/2`}><QuestionCard questionNo={2} callback={()=>questionNavigation(2)} isQuestionAttempted={areQuestionsAttempted[1]}/></Link>
-                                <Link to={`${url}/3`}><QuestionCard questionNo={3} callback={()=>questionNavigation(3)} isQuestionAttempted={areQuestionsAttempted[2]}/></Link>
-                                <Link to={`${url}/4`}><QuestionCard questionNo={4} callback={()=>questionNavigation(4)} isQuestionAttempted={areQuestionsAttempted[3]}/></Link>
-                                <Link to={`${url}/5`}><QuestionCard questionNo={5} callback={()=>questionNavigation(5)} isQuestionAttempted={areQuestionsAttempted[4]}/></Link> */}
                             </div>
 
                             <Link to={`${url}/${previousQues}`}>

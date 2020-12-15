@@ -1,10 +1,9 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import renderer from "react-test-renderer";
 
 import Submit from '../Submit';
 
-it("runs without crash", () => {
-  const div = document.createElement("div");
-  render(<Submit />, div);
-  unmountComponentAtNode(div);
+it("renders correctly", () => {
+  const tree = renderer.create(<Submit />).toJSON();
+  expect(tree).toMatchSnapshot();
 });
