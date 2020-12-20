@@ -128,6 +128,7 @@ export default function Test(props){
       while(Questions.length>5)arr.push(Questions.splice(0,5))
       arr.push(Questions);
       
+      if(window.opener)
       return (
             <div className="landing" style={{background: "slateblue"}}>
                 <div>
@@ -185,6 +186,9 @@ export default function Test(props){
                 </div>
                 <Redirect to={`${url}/1`} />
             </div>
+        );
+        else return (
+            <Redirect to="/"/>
         );
     
 }

@@ -713,3 +713,9 @@ form select {
     padding: 0.3rem 0.4rem;
   }
 }
+ 
+.errPara{
+  font-size: small;
+    color: yellow;
+    text-align: left;
+}

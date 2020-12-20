@@ -14,14 +14,20 @@ export default class Register extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateForm = this.validateForm.bind(this);
+        this.nameMsg = "";
+        this.emailMsg = "";
+        this.contactMsg = "";
     }
 
     // VALIDATE INPUTS AND ENABLE SUBMIT BUTTON
     validateForm(){
         const { fullName, email, contact } = this.state;
-        if( fullName.length > 3 &&
-            email.length > 7 &&
-            contact.length > 9
+        if( fullName.length > 2 &&
+            email.length > 10 &&
+            contact.length > 9  &&
+            this.nameMsg==="" &&
+            this.emailMsg==="" &&
+            this.contactMsg===""
         ){
             this.enableSubmit = true;
         }
@@ -33,6 +39,19 @@ export default class Register extends Component {
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
+        if(event.target.name==="fullName" && event.target.value.length > 0){
+            if(event.target.value.length < 3)this.nameMsg = "Name must be atleast 3 characters";
+            else this.nameMsg ="";
+        }
+        else if(event.target.name==="email" && event.target.value.length > 2){
+            if(event.target.value.length < 10)this.emailMsg = "Invalid email";
+            else this.emailMsg ="";
+        }
+        else if(event.target.name==="contact" && event.target.value.length > 2){
+            if(event.target.value.length != 10)this.contactMsg = "only 10 characters allowed"
+            else this.contactMsg ="";
+        }
+        
     }
 
     handleSubmit(){
@@ -67,13 +86,16 @@ export default class Register extends Component {
                         <h1 className="large text-primary">Register</h1>
                         <form className="form" onSubmit={this.handleSubmit}>
                             <div className="form-group">
-                                <input type="text" placeholder="Full Name" name="fullName" onChange={this.handleChange} spellCheck={false} required autoFocus/>
+                                <input type="text" placeholder="Full Name" name="fullName" onChange={this.handleChange} spellCheck={false} required autoFocus autoComplete="off"/>
+                                <p className="errPara">{this.nameMsg}</p>
                             </div>
                             <div className="form-group">
-                                <input type="email" placeholder="Email Address" name="email" onChange={this.handleChange} required/>
+                                <input type="email" placeholder="Email Address" name="email" onChange={this.handleChange} required autoComplete="off"/>
+                                <p className="errPara">{this.emailMsg}</p>
                             </div>
                             <div className="form-group">
-                                <input type="text" placeholder="Contact No." name="contact" onChange={this.handleChange} minLength="10" max="10000000000" required/>
+                                <input type="text" placeholder="Contact No." name="contact" onChange={this.handleChange} minLength="10" max="10000000000" required autoComplete="off"/>
+                                <p className="errPara">{this.contactMsg}</p>
                             </div>
                             <div className="buttons">
                                 <input type="button" className="btn btn-primary" onClick={this.handleSubmit} value="Submit Details" />
