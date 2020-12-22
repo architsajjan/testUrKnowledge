@@ -23,7 +23,7 @@ export default class Register extends Component {
     validateForm(){
         const { fullName, email, contact } = this.state;
         if( fullName.length > 2 &&
-            email.length > 10 &&
+            email.length > 9 &&
             contact.length > 9  &&
             this.nameMsg==="" &&
             this.emailMsg==="" &&
@@ -32,6 +32,13 @@ export default class Register extends Component {
             this.enableSubmit = true;
         }
         else {
+            if( fullName === "" )
+            this.nameMsg="Required Field";
+            if( email === "" )
+            this.emailMsg="Required Field";
+            if( contact === "" )
+            this.contactMsg="Required Field";
+            this.setState({...this.state});
             this.enableSubmit = false;
         }
         
@@ -44,7 +51,12 @@ export default class Register extends Component {
             else this.nameMsg ="";
         }
         else if(event.target.name==="email" && event.target.value.length > 2){
-            if(event.target.value.length < 10)this.emailMsg = "Invalid email";
+            if((!event.target.value.includes("@")) || 
+               (!event.target.value.includes(".co") && 
+                !event.target.value.includes(".in") && 
+                !event.target.value.includes(".org")
+               )
+              )this.emailMsg = "Invalid email";
             else this.emailMsg ="";
         }
         else if(event.target.name==="contact" && event.target.value.length > 2){
@@ -77,7 +89,7 @@ export default class Register extends Component {
                     <div className="landing-main dark-overlay">
                     <h1 className="x-large">Test Ur Knowledge</h1>
                     <p className="lead">
-                    Enter your Details to Continue with the test:
+                    Enter your Details to Continue with the test
                     </p>
                     </div>
                 </div>

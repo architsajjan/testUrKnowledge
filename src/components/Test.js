@@ -63,13 +63,7 @@ export default function Test(props){
     
     async function GenerateReportObject(){
         let result = {};
-        function Verify(arr,str){
-            if(
-                arr.every(option => str.split(",").includes(option.toString())) &&
-                str.split(",").every(option => arr.map(opt => opt.toString()).includes(option.toString())) 
-            )return true;
-            return false;
-        }
+        
         Object.keys(base).map(quesNo => {
             result[quesNo] = {
                 question: base[Number(quesNo)].question,
@@ -193,6 +187,13 @@ export default function Test(props){
     
 }
 
+export function Verify(arr,str){
+    if(
+        arr.every(option => str.split(",").includes(option.toString())) &&
+        str.split(",").every(option => arr.map(opt => opt.toString()).includes(option.toString())) 
+    )return true;
+    return false;
+}
 
 Test.propTypes = {
     history: PropTypes.object.isRequired,
