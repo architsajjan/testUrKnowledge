@@ -18,7 +18,7 @@ exports[`renders correctly 1`] = `
       <p
         className="lead"
       >
-        Enter your Details to Continue with the test:
+        Enter your Details to Continue with the test
       </p>
     </div>
   </div>
