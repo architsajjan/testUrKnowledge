@@ -16,7 +16,7 @@ test("returns true if array and string have same values", () => {
 });
 
 
-test("returns false if array and string have same values", () => {
+test("returns false if array and string dont have same values", () => {
     //arrange
     let arr =["1","2"];
     let str ="1";
